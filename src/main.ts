@@ -5,8 +5,8 @@ let screen: Electron.BrowserWindow;
 let controller: Electron.BrowserWindow;
 
 function createApp() {
-  controller = createWindow(500, 500, 'controller/main.js');
-  screen = createWindow(300, 300, 'screen/main.js');
+  controller = createWindow(500, 500, 'controller/index.js');
+  screen = createWindow(300, 300, 'screen/index.js');
 }
 
 ipcMain.on('screen', (event, data) => {

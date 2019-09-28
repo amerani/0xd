@@ -1,10 +1,14 @@
-import './controller';
 import { docReady } from "../docReady";
 import { ipcRenderer } from "electron";
-
-console.log('controller')
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Controller } from './controller';
 
 docReady(() => {
+  ReactDOM.render(
+    <Controller />,
+    document.getElementById('root-controller')
+  );
   setTimeout(() => {
     ipcRenderer.send('screen', 'im your controller')
   }, 2000);

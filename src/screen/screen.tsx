@@ -1,10 +1,13 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import { docReady } from '../docReady';
 
-docReady(() => 
-  ReactDOM.render(
-    <p>Screen</p>,
-    document.getElementById('root-screen'),
-  )
-)
+export class Screen extends React.Component<any,any> {
+  render() {
+    const { data } = this.props;
+    const style:any = {
+      backgroundColor: data && data.color,
+      height: "100%",
+      width: "100%"
+    }
+    return <div style={style}>{JSON.stringify(data)}</div>;
+  }
+}
