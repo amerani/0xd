@@ -1,0 +1,24 @@
+{
+  "name": "@hex-13/live",
+  "version": "0.0.0",
+  "main": "dist/main.js",
+  "scripts": {
+    "start": "npm run build && electron .",
+    "build": "tsc",
+    "watch": "tsc -w",
+    "lint": "tslint -c tslint.json -p tsconfig.json"
+  },
+  "author": "0xd",
+  "devDependencies": {
+    "@types/react": "^16.9.3",
+    "@types/react-dom": "^16.9.1",
+    "electron": "^6.0.8",
+    "tslint": "^5.19.0",
+    "typescript": "^3.6.0"
+  },
+  "dependencies": {
+    "react": "^16.10.0",
+    "react-dom": "^16.10.0",
+    "require-all": "^3.0.0"
+  }
+}
