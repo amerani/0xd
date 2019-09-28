@@ -1,9 +1,9 @@
-import { docReady } from "../docReady";
+import { onDomReady } from "../dom";
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Controller } from './controller';
 
-docReady(() => {
+onDomReady(() => {
   ReactDOM.render(
     <Controller />,
     document.getElementById('root-controller')

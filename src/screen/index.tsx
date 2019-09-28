@@ -1,27 +1,38 @@
-import { docReady } from "../docReady";
-import { ipcRenderer } from "electron";
+import { onDomReady } from "../dom";
 import React from "react";
 import ReactDOM from 'react-dom';
 import { Screen } from './screen';
-import { initialState, ScreenState } from './state';
+import { initialState, ScreenProps } from './state';
 import { ControllerCommand } from '../controller/command';
+import { subscribe } from '../ipc';
 
-docReady(() => {
+const root = () => document.getElementById('root-screen');
+
+function initialRender() {
   ReactDOM.render(
     <Screen data={initialState}/>,
-    document.getElementById('root-screen')
+    root()
   );
-  ipcRenderer.on('screen', (_, data:ControllerCommand) => {
+}
+
+function render() {
+  subscribe('screen', (command) => {
+    const props = derivePropsFromCommand(command);
     ReactDOM.hydrate(
-      <Screen data={deriveStateFromCommand(data)}/>,
-      document.getElementById('root-screen')
-    );    
+      <Screen {...props} />,
+      root()
+    )
   })
+}
+
+onDomReady(() => {
+  initialRender();
+  render();
 })
 
-function deriveStateFromCommand(command: ControllerCommand):ScreenState {
-  return {
+function derivePropsFromCommand(command: ControllerCommand):ScreenProps {
+  return { data: {
     ...initialState,
     ...command.payload
-  }
+  }}
 }

@@ -1,10 +1,10 @@
 import React from 'react'
-import { ipcRenderer } from 'electron';
+import { publish } from '../ipc';
 
 export class Controller extends React.Component {
   sendColor = (e:any) => {
     const color = e.target.color.value;
-    ipcRenderer.send('screen', { command: 'set-color', payload: { color }})
+    publish('screen', { type: 'set-color', payload: { color }})
   }
   render() {
     return (
