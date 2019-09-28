@@ -4,7 +4,6 @@ import { ipcRenderer } from 'electron';
 export class Controller extends React.Component {
   sendColor = (e:any) => {
     const color = e.target.color.value;
-    console.log(color);
     ipcRenderer.send('screen', { command: 'set-color', payload: { color }})
   }
   render() {
