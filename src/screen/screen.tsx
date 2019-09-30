@@ -30,27 +30,32 @@ export class Screen extends React.Component<ScreenProps,ScreenState> {
     this.renderCanvas();
   }
   renderCanvas = () => {
-    if(this.screenManager) {
-      this.screenManager.dispose();
-      cancelAnimationFrame(this.animationId);
-    }
+    this.dispose();
     this.screenManager = new ScreenManager(this.state);
-    const { renderer } = this.screenManager;
+    this.mountCanvas();
+    this.animate();
+  }
+  animate = () => {
+    this.animationId = requestAnimationFrame(this.animate);
+    this.screenManager.update(this.state);
+  }
+  mountCanvas = () => {
     if(this.canvas) {
-      const newCanvas = renderer.domElement;
+      const newCanvas = this.screenManager.getCanvas();
       this.mount.replaceChild(newCanvas, this.canvas);
       this.canvas = newCanvas;
     }
     else {
-      this.canvas = renderer.domElement;
-      this.mount.appendChild(renderer.domElement);
+      this.canvas = this.screenManager.getCanvas();
+      this.mount.appendChild(this.canvas);
     }
-    const animate = () => {
-      this.animationId = requestAnimationFrame(animate);
-      this.screenManager.update(this.state);
-    };
-    animate();
-  }  
+  }
+  dispose = () => {
+    if(this.screenManager) {
+      this.screenManager.dispose();
+      cancelAnimationFrame(this.animationId);
+    }
+  }
   render() {
     return (
       <div ref={ref => (this.mount = ref)} />
